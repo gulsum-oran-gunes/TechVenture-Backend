@@ -5,9 +5,10 @@ using Persistence.Contexts;
 
 namespace Persistence.Repositories;
 
-public class ApplicantBootcampContentRepository : EfRepositoryBase<ApplicantBootcampContent, int, BaseDbContext>, IApplicantBootcampContentRepository
+public class ApplicantBootcampContentRepository
+    : EfRepositoryBase<ApplicantBootcampContent, int, BaseDbContext>,
+        IApplicantBootcampContentRepository
 {
-    public ApplicantBootcampContentRepository(BaseDbContext context) : base(context)
-    {
-    }
+    public ApplicantBootcampContentRepository(BaseDbContext context)
+        : base(context) { }
 }

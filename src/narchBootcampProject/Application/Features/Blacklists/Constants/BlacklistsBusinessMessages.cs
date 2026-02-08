@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Application.Features.Blacklists.Constants;
+
 public static class BlacklistsBusinessMessages
 {
     public const string SectionName = "Blacklist";
@@ -12,5 +13,4 @@ public static class BlacklistsBusinessMessages
     public const string BlacklistNotExists = "BlacklistNotExists";
 
     public const string ReasonNull = "Reason can't be null";
-
 }

@@ -22,13 +22,10 @@ public class UserOperationClaimRepository
             .ToListAsync();
         return operationClaims;
     }
+
     public async Task<List<UserOperationClaim>> GetUserOperationClaimByUserIdAsync(Guid userId)
     {
-        List<UserOperationClaim> userOperationClaims = await Query()
-            .AsNoTracking()
-            .Where(r =>
-                r.UserId == userId)
-            .ToListAsync();
+        List<UserOperationClaim> userOperationClaims = await Query().AsNoTracking().Where(r => r.UserId == userId).ToListAsync();
 
         return userOperationClaims;
     }

@@ -29,11 +29,7 @@ public class RefreshTokenRepository : EfRepositoryBase<RefreshToken, Guid, BaseD
 
     public async Task<List<RefreshToken>> GetRefreshTokenByUserIdAsync(Guid userId)
     {
-        List<RefreshToken> tokens = await Query()
-            .AsNoTracking()
-            .Where(r =>
-                r.UserId == userId)
-            .ToListAsync();
+        List<RefreshToken> tokens = await Query().AsNoTracking().Where(r => r.UserId == userId).ToListAsync();
 
         return tokens;
     }

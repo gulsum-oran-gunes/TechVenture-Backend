@@ -21,6 +21,5 @@ public class BootcampContentConfiguration : IEntityTypeConfiguration<BootcampCon
         builder.HasOne(x => x.Bootcamp);
         builder.HasMany(x => x.ApplicantBootcampContents);
         builder.HasQueryFilter(bc => !bc.DeletedDate.HasValue);
-       
     }
 }

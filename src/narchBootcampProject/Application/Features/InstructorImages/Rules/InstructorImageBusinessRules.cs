@@ -1,9 +1,9 @@
 using Application.Features.InstructorImages.Constants;
 using Application.Services.Repositories;
+using Domain.Entities;
 using NArchitecture.Core.Application.Rules;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
-using Domain.Entities;
 
 namespace Application.Features.InstructorImages.Rules;
 
@@ -12,7 +12,10 @@ public class InstructorImageBusinessRules : BaseBusinessRules
     private readonly IInstructorImageRepository _instructorImageRepository;
     private readonly ILocalizationService _localizationService;
 
-    public InstructorImageBusinessRules(IInstructorImageRepository instructorImageRepository, ILocalizationService localizationService)
+    public InstructorImageBusinessRules(
+        IInstructorImageRepository instructorImageRepository,
+        ILocalizationService localizationService
+    )
     {
         _instructorImageRepository = instructorImageRepository;
         _localizationService = localizationService;

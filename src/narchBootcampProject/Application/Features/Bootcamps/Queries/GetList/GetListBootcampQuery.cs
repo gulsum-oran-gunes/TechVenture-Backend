@@ -13,7 +13,7 @@ using static Application.Features.Bootcamps.Constants.BootcampsOperationClaims;
 
 namespace Application.Features.Bootcamps.Queries.GetList;
 
-public class GetListBootcampQuery : IRequest<GetListResponse<GetListBootcampListItemDto>>/*, ICachableRequest*/
+public class GetListBootcampQuery : IRequest<GetListResponse<GetListBootcampListItemDto>> /*, ICachableRequest*/
 {
     public PageRequest PageRequest { get; set; }
 
@@ -38,7 +38,7 @@ public class GetListBootcampQuery : IRequest<GetListResponse<GetListBootcampList
         public async Task<GetListResponse<GetListBootcampListItemDto>> Handle(
             GetListBootcampQuery request,
             CancellationToken cancellationToken
-        ) 
+        )
         {
             IPaginate<Bootcamp> bootcamps = await _bootcampRepository.GetListAsync(
                 orderBy: query => query.OrderByDescending(b => b.Deadline),
@@ -46,7 +46,6 @@ public class GetListBootcampQuery : IRequest<GetListResponse<GetListBootcampList
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
                 include: p => p.Include(x => x.Instructor).Include(p => p.BootcampState).Include(p => p.BootcampImages)
-               
             );
 
             GetListResponse<GetListBootcampListItemDto> response = _mapper.Map<GetListResponse<GetListBootcampListItemDto>>(

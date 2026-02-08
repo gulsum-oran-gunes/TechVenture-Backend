@@ -31,9 +31,15 @@ public class GetByIdQuizQuery : IRequest<GetByIdQuizResponse>, ISecuredRequest
 
         public async Task<GetByIdQuizResponse> Handle(GetByIdQuizQuery request, CancellationToken cancellationToken)
         {
-            Quiz? quiz = await _quizRepository.GetAsync(predicate: q => q.Id == request.Id, cancellationToken: cancellationToken,
-            include: x => x.Include(a => a.Applicant).Include(b => b.Bootcamp)
-            .Include(q => q.QuizQuestions).ThenInclude(q => q.Question));
+            Quiz? quiz = await _quizRepository.GetAsync(
+                predicate: q => q.Id == request.Id,
+                cancellationToken: cancellationToken,
+                include: x =>
+                    x.Include(a => a.Applicant)
+                        .Include(b => b.Bootcamp)
+                        .Include(q => q.QuizQuestions)
+                        .ThenInclude(q => q.Question)
+            );
             await _quizBusinessRules.QuizShouldExistWhenSelected(quiz);
 
             GetByIdQuizResponse response = _mapper.Map<GetByIdQuizResponse>(quiz);

@@ -1,9 +1,9 @@
+using System.Linq.Expressions;
 using Application.Features.Certificates.Rules;
 using Application.Services.Repositories;
-using NArchitecture.Core.Persistence.Paging;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
-using System.Linq.Expressions;
+using NArchitecture.Core.Persistence.Paging;
 
 namespace Application.Services.Certificates;
 
@@ -26,7 +26,13 @@ public class CertificateManager : ICertificateService
         CancellationToken cancellationToken = default
     )
     {
-        Certificate? certificate = await _certificateRepository.GetAsync(predicate, include, withDeleted, enableTracking, cancellationToken);
+        Certificate? certificate = await _certificateRepository.GetAsync(
+            predicate,
+            include,
+            withDeleted,
+            enableTracking,
+            cancellationToken
+        );
         return certificate;
     }
 

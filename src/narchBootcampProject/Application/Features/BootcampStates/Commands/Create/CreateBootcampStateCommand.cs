@@ -49,7 +49,6 @@ public class CreateBootcampStateCommand
             CancellationToken cancellationToken
         )
         {
-            
             BootcampState bootcampState = _mapper.Map<BootcampState>(request);
             await _bootcampStateBusinessRules.CheckIfBootcampStateNameExists(request.Name);
             await _bootcampStateRepository.AddAsync(bootcampState);

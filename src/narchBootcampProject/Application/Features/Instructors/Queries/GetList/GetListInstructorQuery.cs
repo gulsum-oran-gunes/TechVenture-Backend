@@ -13,7 +13,10 @@ using static Application.Features.Instructors.Constants.InstructorsOperationClai
 
 namespace Application.Features.Instructors.Queries.GetList;
 
-public class GetListInstructorQuery : IRequest<GetListResponse<GetListInstructorListItemDto>>/* ISecuredRequest*//* ,ICachableRequest*/
+public class GetListInstructorQuery
+    : IRequest<
+        GetListResponse<GetListInstructorListItemDto>
+    > /* ISecuredRequest*/ /* ,ICachableRequest*/
 {
     public PageRequest PageRequest { get; set; }
 

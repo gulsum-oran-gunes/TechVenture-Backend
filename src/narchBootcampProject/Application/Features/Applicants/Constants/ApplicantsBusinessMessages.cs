@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Application.Features.Applicants.Constants;
+
 public static class ApplicantsBusinessMessages
 {
     public const string SectionName = "Applicant";

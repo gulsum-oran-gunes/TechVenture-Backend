@@ -30,5 +30,4 @@ public interface IUserOperationClaimService
     Task<UserOperationClaim> UpdateAsync(UserOperationClaim userOperationClaim);
     Task<UserOperationClaim> DeleteAsync(UserOperationClaim userOperationClaim, bool permanent = false);
     Task DeleteAllUserOperationClaimByUserIdAsync(Guid userId);
-   
 }

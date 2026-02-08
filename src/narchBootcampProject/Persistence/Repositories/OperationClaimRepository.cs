@@ -10,5 +10,4 @@ public class OperationClaimRepository : EfRepositoryBase<OperationClaim, int, Ba
 {
     public OperationClaimRepository(BaseDbContext context)
         : base(context) { }
-    
 }

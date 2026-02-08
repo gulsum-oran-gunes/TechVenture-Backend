@@ -19,7 +19,6 @@ public class CreateApplicationEntityCommand
         ILoggableRequest,
         ITransactionalRequest
 {
-    
     public Guid ApplicantId { get; set; }
     public int BootcampId { get; set; }
     public string[] Roles => [Admin, Write, ApplicationEntitiesOperationClaims.Create, Student];

@@ -14,15 +14,17 @@ public class BootcampBusinessRules : BaseBusinessRules
     private readonly IBootcampStateRepository _bootcampStateRepository;
     private readonly IInstructorRepository _instructorRepository;
 
-    public BootcampBusinessRules(IBootcampRepository bootcampRepository, 
+    public BootcampBusinessRules(
+        IBootcampRepository bootcampRepository,
         ILocalizationService localizationService,
         IBootcampStateRepository bootcampStateRepository,
-        IInstructorRepository instructorRepository)
+        IInstructorRepository instructorRepository
+    )
     {
         _bootcampRepository = bootcampRepository;
         _localizationService = localizationService;
         _bootcampStateRepository = bootcampStateRepository;
-        _instructorRepository= instructorRepository;
+        _instructorRepository = instructorRepository;
     }
 
     private async Task throwBusinessException(string messageKey)
@@ -46,19 +48,25 @@ public class BootcampBusinessRules : BaseBusinessRules
         );
         await BootcampShouldExistWhenSelected(bootcamp);
     }
+
     public async Task CheckIfBootcampNameExists(string bootcampName)
     {
         var isExists = await _bootcampRepository.GetAsync(bootcamp => bootcamp.Name == bootcampName);
-        if (isExists is not null) throw new BusinessException(BootcampsBusinessMessages.BootcampNameExists);
+        if (isExists is not null)
+            throw new BusinessException(BootcampsBusinessMessages.BootcampNameExists);
     }
+
     public async Task CheckIfBootcampStateIdExists(int bootcampStateId)
     {
         var isExists = await _bootcampStateRepository.GetAsync(x => x.Id == bootcampStateId);
-        if (isExists is  null) throw new BusinessException(BootcampsBusinessMessages.BootcampStateExists);
+        if (isExists is null)
+            throw new BusinessException(BootcampsBusinessMessages.BootcampStateExists);
     }
+
     public async Task CheckIfInstructorIdExists(Guid instructorId)
     {
         var isExists = await _instructorRepository.GetAsync(x => x.Id == instructorId);
-        if (isExists is null) throw new BusinessException(BootcampsBusinessMessages.InstructorExists); 
+        if (isExists is null)
+            throw new BusinessException(BootcampsBusinessMessages.InstructorExists);
     }
 }

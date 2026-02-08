@@ -31,7 +31,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasMany(u => u.RefreshTokens);
         builder.HasMany(u => u.EmailAuthenticators);
         builder.HasMany(u => u.OtpAuthenticators);
-       
 
         builder.HasData(_seeds);
 
@@ -65,25 +64,24 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             yield return adminUser;
 
             HashingHelper.CreatePasswordHash(
-            password: "Passw0rd2!",
-            passwordHash: out byte[] passwordHash2,
-            passwordSalt: out byte[] passwordSalt2
-        );
+                password: "Passw0rd2!",
+                passwordHash: out byte[] passwordHash2,
+                passwordSalt: out byte[] passwordSalt2
+            );
             User adminUser2 =
-            new()
-            {
-                UserName = "admin",
-                FirstName = "Gulsum",
-                LastName = "Oran",
-                NationalIdentity = "123456",
-                DateOfBirth = null,
-                Id = Admin2Id,
-                Email = "gulsum.oran@hotmail.com",
-                PasswordHash = passwordHash2,
-                PasswordSalt = passwordSalt2
-            };
+                new()
+                {
+                    UserName = "admin",
+                    FirstName = "Gulsum",
+                    LastName = "Oran",
+                    NationalIdentity = "123456",
+                    DateOfBirth = null,
+                    Id = Admin2Id,
+                    Email = "gulsum.oran@hotmail.com",
+                    PasswordHash = passwordHash2,
+                    PasswordSalt = passwordSalt2
+                };
             yield return adminUser2;
-
         }
     }
 }

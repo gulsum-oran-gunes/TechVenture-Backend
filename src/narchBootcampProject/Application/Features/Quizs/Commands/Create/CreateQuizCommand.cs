@@ -67,8 +67,7 @@ public class CreateQuizCommand
             List<Question> randomQuestions = await _questionService.GetRandomQuestionsByBootcampIdAsync(request.BootcampId);
             var bootcamp = await _bootcampRepository.GetAsync(b => b.Id == request.BootcampId);
             Quiz quiz = _mapper.Map<Quiz>(request);
-           
-           
+
             await _quizRepository.AddAsync(quiz);
 
             foreach (var question in randomQuestions)

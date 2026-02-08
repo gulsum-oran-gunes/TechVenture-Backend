@@ -18,7 +18,6 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NArchitecture.Core.Application.Dtos;
 using NArchitecture.Core.Security.Entities;
 
-
 namespace WebAPI.Controllers;
 
 [Route("api/[controller]")]
@@ -27,6 +26,7 @@ public class AuthController : BaseController
 {
     private readonly WebApiConfiguration _configuration;
     private readonly IEmailAuthenticatorRepository _emailAuthenticatorRepository;
+
     public AuthController(IConfiguration configuration, IEmailAuthenticatorRepository emailAuthenticatorRepository)
     {
         const string configurationSection = "WebAPIConfiguration";
@@ -57,15 +57,16 @@ public class AuthController : BaseController
         setRefreshTokenToCookie(result.RefreshToken);
         return Created(uri: "", result.AccessToken);
     }
+
     [HttpPost("RegisterEmployee")]
     public async Task<IActionResult> Register([FromBody] EmployeeRegisterDto employeeRegisterDto)
     {
-        EmployeeRegisterCommand registerCommand =
-            new() { EmployeeRegisterDto = employeeRegisterDto, IpAddress = getIpAddress() };
+        EmployeeRegisterCommand registerCommand = new() { EmployeeRegisterDto = employeeRegisterDto, IpAddress = getIpAddress() };
         RegisteredResponse result = await Mediator.Send(registerCommand);
         setRefreshTokenToCookie(result.RefreshToken);
         return Created(uri: "", result.AccessToken);
     }
+
     [HttpPost("RegisterInstructor")]
     public async Task<IActionResult> Register([FromBody] InstructorRegisterDto instructorRegisterDto)
     {
@@ -182,7 +183,14 @@ public class AuthController : BaseController
 
     private void setRefreshTokenToCookie(RefreshToken refreshToken)
     {
-        CookieOptions cookieOptions = new() { HttpOnly = true, Expires = DateTime.UtcNow.AddDays(7), Secure = true, SameSite = SameSiteMode.None };
+        CookieOptions cookieOptions =
+            new()
+            {
+                HttpOnly = true,
+                Expires = DateTime.UtcNow.AddDays(7),
+                Secure = true,
+                SameSite = SameSiteMode.None
+            };
         Response.Cookies.Append(key: "refreshToken", refreshToken.Token, cookieOptions);
     }
 }

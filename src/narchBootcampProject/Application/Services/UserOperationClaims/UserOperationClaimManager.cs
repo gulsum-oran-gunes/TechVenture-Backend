@@ -101,9 +101,9 @@ public class UserUserOperationClaimManager : IUserOperationClaimService
 
     public async Task DeleteAllUserOperationClaimByUserIdAsync(Guid userId)
     {
-        List<UserOperationClaim> userOperationClaims = await _userUserOperationClaimRepository.GetUserOperationClaimByUserIdAsync(userId);
+        List<UserOperationClaim> userOperationClaims = await _userUserOperationClaimRepository.GetUserOperationClaimByUserIdAsync(
+            userId
+        );
         await _userUserOperationClaimRepository.DeleteRangeAsync(userOperationClaims, true);
     }
-
-    
 }

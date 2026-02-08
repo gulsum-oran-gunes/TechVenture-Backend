@@ -39,9 +39,11 @@ public class BootcampStateBusinessRules : BaseBusinessRules
         );
         await BootcampStateShouldExistWhenSelected(bootcampState);
     }
+
     public async Task CheckIfBootcampStateNameExists(string bootcampStateName)
     {
         var isExits = await _bootcampStateRepository.GetAsync(x => x.Name == bootcampStateName);
-        if (isExits is not null) throw new BusinessException(BootcampStatesBusinessMessages.BootcampStateNameExists);
+        if (isExits is not null)
+            throw new BusinessException(BootcampStatesBusinessMessages.BootcampStateNameExists);
     }
 }

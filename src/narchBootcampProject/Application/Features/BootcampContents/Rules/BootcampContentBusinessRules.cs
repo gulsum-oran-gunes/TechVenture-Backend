@@ -1,9 +1,9 @@
 using Application.Features.BootcampContents.Constants;
 using Application.Services.Repositories;
+using Domain.Entities;
 using NArchitecture.Core.Application.Rules;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
-using Domain.Entities;
 
 namespace Application.Features.BootcampContents.Rules;
 
@@ -13,18 +13,18 @@ public class BootcampContentBusinessRules : BaseBusinessRules
     private readonly ILocalizationService _localizationService;
     private readonly IApplicantBootcampContentRepository _applicantBootcampContentRepository;
     private readonly ICertificateRepository _certificateRepository;
-    
 
-    public BootcampContentBusinessRules(IBootcampContentRepository bootcampContentRepository,
+    public BootcampContentBusinessRules(
+        IBootcampContentRepository bootcampContentRepository,
         ILocalizationService localizationService,
         IApplicantBootcampContentRepository applicantBootcampContentRepository,
-        ICertificateRepository certificateRepository)
+        ICertificateRepository certificateRepository
+    )
     {
         _bootcampContentRepository = bootcampContentRepository;
         _localizationService = localizationService;
         _applicantBootcampContentRepository = applicantBootcampContentRepository;
         _certificateRepository = certificateRepository;
-       
     }
 
     private async Task throwBusinessException(string messageKey)
@@ -56,10 +56,10 @@ public class BootcampContentBusinessRules : BaseBusinessRules
             enableTracking: false
         );
 
-        return applicantBootcampContent != null; 
+        return applicantBootcampContent != null;
 
-        // Eðer ilgili kayýt varsa true, yoksa false dön.
-        // Content sayfasýnda kullanýcý içeriði izledim iþaretlemiþ mi bunu kontrol etmek ve checkboxu dolu getirmek için
+        // Eï¿½er ilgili kayï¿½t varsa true, yoksa false dï¿½n.
+        // Content sayfasï¿½nda kullanï¿½cï¿½ iï¿½eriï¿½i izledim iï¿½aretlemiï¿½ mi bunu kontrol etmek ve checkboxu dolu getirmek iï¿½in
     }
 
     public bool IfApplicantPassed(Guid? applicantId, int? bootcampId)
@@ -70,8 +70,5 @@ public class BootcampContentBusinessRules : BaseBusinessRules
         );
 
         return certificate;
-
     }
-
-
 }

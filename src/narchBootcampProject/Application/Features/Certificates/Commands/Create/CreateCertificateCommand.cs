@@ -17,43 +17,44 @@ namespace Application.Features.Certificates.Commands.Create;
 
 public class CertificateDoc : IDocument
 {
-   
     private readonly Certificate _certificate;
 
-    public CertificateDoc( Certificate certificate)
+    public CertificateDoc(Certificate certificate)
     {
-      
         _certificate = certificate;
     }
 
     public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
+
     public DocumentSettings GetSettings() => DocumentSettings.Default;
 
     public void Compose(IDocumentContainer container)
     {
-        container
-            .Page(page =>
-            {
-                // background image size
-                page.Size(1678, 1182);
-                page.Background()
-                    .Image("../Application/Features/Certificates/Resources/Assets/Cert_Template.png");
+        container.Page(page =>
+        {
+            // background image size
+            page.Size(1678, 1182);
+            page.Background().Image("../Application/Features/Certificates/Resources/Assets/Cert_Template.png");
 
-                page.Content().Column(column =>
+            page.Content()
+                .Column(column =>
                 {
                     var baseHeight = 1182 / 3;
 
                     column.Spacing(30);
 
-                    column.Item()
+                    column
+                        .Item()
                         .Height(baseHeight + 100)
                         .AlignCenter()
                         .AlignBottom()
                         .TranslateX(100)
                         .Text(_certificate.Bootcamp.Name)
-                        .FontColor("#000000").FontSize(48);
+                        .FontColor("#000000")
+                        .FontSize(48);
 
-                    column.Item()
+                    column
+                        .Item()
                         .Height(baseHeight - 100)
                         .AlignCenter()
                         .AlignTop()
@@ -63,25 +64,28 @@ public class CertificateDoc : IDocument
                         .Italic()
                         .LineHeight(1.5f)
                         .Bold()
-                        .FontColor("#000000").FontSize(112);
+                        .FontColor("#000000")
+                        .FontSize(112);
 
-                    column.Item()
+                    column
+                        .Item()
                         .Height(baseHeight / 2 - 50)
                         .AlignCenter()
                         .AlignMiddle()
                         .TranslateX(-250)
                         .Text(DateOnly.FromDateTime(_certificate.CreatedDate).ToString("dd/MM/yyyy"))
-                        .FontColor("#000000").FontSize(36);
+                        .FontColor("#000000")
+                        .FontSize(36);
                 });
-
-
-            });
-
+        });
     }
-
 }
 
-public class CreateCertificateCommand : IRequest<CreatedCertificateResponse>, /*ISecuredRequest,*/ ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class CreateCertificateCommand
+    : IRequest<CreatedCertificateResponse>, /*ISecuredRequest,*/
+        ICacheRemoverRequest,
+        ILoggableRequest,
+        ITransactionalRequest
 {
     public Guid ApplicantId { get; set; }
     public int BootcampId { get; set; }
@@ -100,9 +104,13 @@ public class CreateCertificateCommand : IRequest<CreatedCertificateResponse>, /*
         private readonly IBootcampRepository _bootcampRepository;
         private readonly CertificateBusinessRules _certificateBusinessRules;
 
-        public CreateCertificateCommandHandler(IMapper mapper, ICertificateRepository certificateRepository,
-                                         IApplicantRepository applicantRepository, IBootcampRepository bootcampRepository,
-                                         CertificateBusinessRules certificateBusinessRules)
+        public CreateCertificateCommandHandler(
+            IMapper mapper,
+            ICertificateRepository certificateRepository,
+            IApplicantRepository applicantRepository,
+            IBootcampRepository bootcampRepository,
+            CertificateBusinessRules certificateBusinessRules
+        )
         {
             _mapper = mapper;
             _certificateRepository = certificateRepository;
@@ -111,9 +119,11 @@ public class CreateCertificateCommand : IRequest<CreatedCertificateResponse>, /*
             _certificateBusinessRules = certificateBusinessRules;
         }
 
-        public async Task<CreatedCertificateResponse> Handle(CreateCertificateCommand request, CancellationToken cancellationToken)
+        public async Task<CreatedCertificateResponse> Handle(
+            CreateCertificateCommand request,
+            CancellationToken cancellationToken
+        )
         {
-
             var certificate = await _certificateRepository.GetAsync(
                 predicate: c => c.ApplicantId == request.ApplicantId && c.BootcampId == request.BootcampId,
                 include: x => x.Include(x => x.Applicant).Include(x => x.Bootcamp),
@@ -142,7 +152,5 @@ public class CreateCertificateCommand : IRequest<CreatedCertificateResponse>, /*
 
             return response;
         }
-
-
     }
 }

@@ -2,18 +2,21 @@ using Application.Features.ApplicantBootcampContents.Constants;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
-using MediatR;
 using static Application.Features.ApplicantBootcampContents.Constants.ApplicantBootcampContentsOperationClaims;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.ApplicantBootcampContents.Queries.GetList;
 
-public class GetListApplicantBootcampContentQuery : IRequest<GetListResponse<GetListApplicantBootcampContentListItemDto>>, ISecuredRequest, ICachableRequest
+public class GetListApplicantBootcampContentQuery
+    : IRequest<GetListResponse<GetListApplicantBootcampContentListItemDto>>,
+        ISecuredRequest,
+        ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
 
@@ -24,27 +27,37 @@ public class GetListApplicantBootcampContentQuery : IRequest<GetListResponse<Get
     public string? CacheGroupKey => "GetApplicantBootcampContents";
     public TimeSpan? SlidingExpiration { get; }
 
-    public class GetListApplicantBootcampContentQueryHandler : IRequestHandler<GetListApplicantBootcampContentQuery, GetListResponse<GetListApplicantBootcampContentListItemDto>>
+    public class GetListApplicantBootcampContentQueryHandler
+        : IRequestHandler<GetListApplicantBootcampContentQuery, GetListResponse<GetListApplicantBootcampContentListItemDto>>
     {
         private readonly IApplicantBootcampContentRepository _applicantBootcampContentRepository;
         private readonly IMapper _mapper;
 
-        public GetListApplicantBootcampContentQueryHandler(IApplicantBootcampContentRepository applicantBootcampContentRepository, IMapper mapper)
+        public GetListApplicantBootcampContentQueryHandler(
+            IApplicantBootcampContentRepository applicantBootcampContentRepository,
+            IMapper mapper
+        )
         {
             _applicantBootcampContentRepository = applicantBootcampContentRepository;
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListApplicantBootcampContentListItemDto>> Handle(GetListApplicantBootcampContentQuery request, CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListApplicantBootcampContentListItemDto>> Handle(
+            GetListApplicantBootcampContentQuery request,
+            CancellationToken cancellationToken
+        )
         {
-            IPaginate<ApplicantBootcampContent> applicantBootcampContents = await _applicantBootcampContentRepository.GetListAsync(
-                index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize, 
-                cancellationToken: cancellationToken,   
-                include: x => x.Include(a=>a.Applicant).Include(b=>b.BootcampContent)
-            );
+            IPaginate<ApplicantBootcampContent> applicantBootcampContents =
+                await _applicantBootcampContentRepository.GetListAsync(
+                    index: request.PageRequest.PageIndex,
+                    size: request.PageRequest.PageSize,
+                    cancellationToken: cancellationToken,
+                    include: x => x.Include(a => a.Applicant).Include(b => b.BootcampContent)
+                );
 
-            GetListResponse<GetListApplicantBootcampContentListItemDto> response = _mapper.Map<GetListResponse<GetListApplicantBootcampContentListItemDto>>(applicantBootcampContents);
+            GetListResponse<GetListApplicantBootcampContentListItemDto> response = _mapper.Map<
+                GetListResponse<GetListApplicantBootcampContentListItemDto>
+            >(applicantBootcampContents);
             return response;
         }
     }

@@ -1,13 +1,13 @@
+using Application.Features.Bootcamps.Queries.GetListByInstructorId;
 using Application.Features.Certificates.Commands.Create;
 using Application.Features.Certificates.Commands.Delete;
 using Application.Features.Certificates.Commands.Update;
+using Application.Features.Certificates.Queries.GetByApplicantId;
 using Application.Features.Certificates.Queries.GetById;
 using Application.Features.Certificates.Queries.GetList;
+using Microsoft.AspNetCore.Mvc;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
-using Microsoft.AspNetCore.Mvc;
-using Application.Features.Bootcamps.Queries.GetListByInstructorId;
-using Application.Features.Certificates.Queries.GetByApplicantId;
 
 namespace WebAPI.Controllers;
 
@@ -61,5 +61,4 @@ public class CertificatesController : BaseController
         var result = await Mediator.Send(query);
         return Ok(result);
     }
-
 }

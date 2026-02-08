@@ -14,8 +14,8 @@ using NArchitecture.Core.Security.JWT;
 using NArchitecture.Core.Security.WebApi.Swagger.Extensions;
 using Persistence;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using WebApi.Exception;
 using WebAPI;
+using WebApi.Exception;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -96,7 +96,6 @@ if (app.Environment.IsDevelopment())
         opt.DocExpansion(DocExpansion.None);
     });
 }
-
 
 app.UseDbMigrationApplier();
 

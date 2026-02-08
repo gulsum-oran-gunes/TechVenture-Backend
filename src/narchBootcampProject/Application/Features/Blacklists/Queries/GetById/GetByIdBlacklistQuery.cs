@@ -38,7 +38,7 @@ public class GetByIdBlacklistQuery : IRequest<GetByIdBlacklistResponse>, ISecure
             Blacklist? blacklist = await _blacklistRepository.GetAsync(
                 predicate: b => b.Id == request.Id,
                 cancellationToken: cancellationToken,
-                 include: a => a.Include(ap => ap.Applicant)
+                include: a => a.Include(ap => ap.Applicant)
             );
             await _blacklistBusinessRules.BlacklistShouldExistWhenSelected(blacklist);
 

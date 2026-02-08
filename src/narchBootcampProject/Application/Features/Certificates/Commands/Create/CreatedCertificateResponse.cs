@@ -8,5 +8,4 @@ public class CreatedCertificateResponse : IResponse
     public Guid ApplicantId { get; set; }
     public int BootcampId { get; set; }
     public byte[] File { get; set; }
-
 }

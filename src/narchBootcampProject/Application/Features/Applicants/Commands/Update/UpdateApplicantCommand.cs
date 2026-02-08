@@ -29,8 +29,6 @@ public class UpdateApplicantCommand
     public string? NationalIdentity { get; set; }
     public string? About { get; set; }
 
-   
-
     public string[] Roles => [Admin, Write, ApplicantsOperationClaims.Update, Student];
 
     public bool BypassCache { get; }
@@ -68,9 +66,6 @@ public class UpdateApplicantCommand
 
             UpdatedApplicantResponse response = _mapper.Map<UpdatedApplicantResponse>(applicant);
             return response;
-
         }
-
     }
-
 }

@@ -7,7 +7,6 @@ namespace Persistence.Repositories;
 
 public class CertificateRepository : EfRepositoryBase<Certificate, int, BaseDbContext>, ICertificateRepository
 {
-    public CertificateRepository(BaseDbContext context) : base(context)
-    {
-    }
+    public CertificateRepository(BaseDbContext context)
+        : base(context) { }
 }

@@ -1,4 +1,9 @@
-﻿using Application.Features.Bootcamps.Queries.GetList;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Application.Features.Bootcamps.Queries.GetList;
 using Application.Features.Bootcamps.Queries.GetListByInstructorId;
 using Application.Features.Certificates.Queries.GetList;
 using Application.Services.Repositories;
@@ -9,18 +14,15 @@ using Microsoft.EntityFrameworkCore;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static QuestPDF.Helpers.Colors;
 
 namespace Application.Features.Certificates.Queries.GetByApplicantId;
+
 public class GetByApplicantIdQuery : IRequest<GetListResponse<GetListCertificateListItemDto>> //, ISecuredRequest, ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
     public Guid ApplicantId { get; set; }
+
     //public string[] Roles => [Admin, Read];
 
     //public bool BypassCache { get; }

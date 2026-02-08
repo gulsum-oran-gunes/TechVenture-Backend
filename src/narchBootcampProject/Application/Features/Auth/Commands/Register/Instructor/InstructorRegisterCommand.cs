@@ -49,7 +49,6 @@ public class InstructorRegisterCommand : IRequest<RegisteredResponse>, ICacheRem
             AuthBusinessRules authBusinessRules,
             IInstructorRepository ınstructorRepository,
             IUserOperationClaimRepository userOperationClaimRepository
-
         )
         {
             _authService = authService;

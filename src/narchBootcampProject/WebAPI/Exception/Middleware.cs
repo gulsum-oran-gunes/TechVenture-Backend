@@ -14,7 +14,11 @@ public class ExceptionMiddleware
     private readonly NArchitecture.Core.CrossCuttingConcerns.Logging.Abstraction.ILogger _loggerService;
     private readonly RequestDelegate _next;
 
-    public ExceptionMiddleware(RequestDelegate next, IHttpContextAccessor contextAccessor, NArchitecture.Core.CrossCuttingConcerns.Logging.Abstraction.ILogger loggerService)
+    public ExceptionMiddleware(
+        RequestDelegate next,
+        IHttpContextAccessor contextAccessor,
+        NArchitecture.Core.CrossCuttingConcerns.Logging.Abstraction.ILogger loggerService
+    )
     {
         _next = next;
         _contextAccessor = contextAccessor;

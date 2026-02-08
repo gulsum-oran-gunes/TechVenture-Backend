@@ -13,6 +13,4 @@ public class GetListResultListItemDto : IDto
     public int CorrectAnswers { get; set; }
     public bool IsPassed { get; set; }
     public int Score => CorrectAnswers * 20;
-
-
 }

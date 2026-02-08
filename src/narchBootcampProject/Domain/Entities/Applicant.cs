@@ -15,9 +15,8 @@ public class Applicant : User
 
     public ICollection<ApplicationEntity> ApplicationEntities { get; set; }
     public ICollection<Quiz> Quizzes { get; set; }
-    public ICollection<ApplicantBootcampContent>ApplicantBootcampContents { get; set; }
+    public ICollection<ApplicantBootcampContent> ApplicantBootcampContents { get; set; }
     public ICollection<Certificate> Certificates { get; set; }
-
 
     public Applicant()
     {

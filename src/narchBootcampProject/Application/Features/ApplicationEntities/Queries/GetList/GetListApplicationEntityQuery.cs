@@ -14,7 +14,9 @@ using static Application.Features.ApplicationEntities.Constants.ApplicationEntit
 namespace Application.Features.ApplicationEntities.Queries.GetList;
 
 public class GetListApplicationEntityQuery
-    : IRequest<GetListResponse<GetListApplicationEntityListItemDto>>,ISecuredRequest,ICachableRequest
+    : IRequest<GetListResponse<GetListApplicationEntityListItemDto>>,
+        ISecuredRequest,
+        ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
 
@@ -47,12 +49,18 @@ public class GetListApplicationEntityQuery
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
-                 include: p => p.Include(x => x.Applicant).Include(x => x.ApplicationState).Include(x => x.Bootcamp).ThenInclude(x => x.BootcampImages)
-                .Include(x => x.Bootcamp).ThenInclude(x => x.Instructor));
-           
+                include: p =>
+                    p.Include(x => x.Applicant)
+                        .Include(x => x.ApplicationState)
+                        .Include(x => x.Bootcamp)
+                        .ThenInclude(x => x.BootcampImages)
+                        .Include(x => x.Bootcamp)
+                        .ThenInclude(x => x.Instructor)
+            );
 
-            GetListResponse<GetListApplicationEntityListItemDto> response = 
-                _mapper.Map<GetListResponse<GetListApplicationEntityListItemDto>>(applicationEntities);
+            GetListResponse<GetListApplicationEntityListItemDto> response = _mapper.Map<
+                GetListResponse<GetListApplicationEntityListItemDto>
+            >(applicationEntities);
             return response;
         }
     }

@@ -48,9 +48,8 @@ public class GetListResultQuery : IRequest<GetListResponse<GetListResultListItem
             );
 
             GetListResponse<GetListResultListItemDto> response = _mapper.Map<GetListResponse<GetListResultListItemDto>>(results);
-            
-            return response;
 
+            return response;
         }
     }
 }

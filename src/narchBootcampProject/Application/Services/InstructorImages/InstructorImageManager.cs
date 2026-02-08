@@ -1,16 +1,16 @@
-using Application.Features.InstructorImages.Rules;
-using Application.Services.Repositories;
-using NArchitecture.Core.Persistence.Paging;
-using Domain.Entities;
-using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
-using Org.BouncyCastle.Asn1.Ocsp;
-using Microsoft.AspNetCore.Http;
-using Application.Services.ImageService;
-using AutoMapper;
 using Application.Features.BootcampImages.Commands.Delete;
 using Application.Features.InstructorImages.Commands.Delete;
+using Application.Features.InstructorImages.Rules;
+using Application.Services.ImageService;
+using Application.Services.Repositories;
+using AutoMapper;
+using Domain.Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Query;
 using NArchitecture.Core.Application.Pipelines.Caching;
+using NArchitecture.Core.Persistence.Paging;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace Application.Services.InstructorImages;
 
@@ -23,8 +23,13 @@ public class InstructorImageManager : IInstructorImageService, ICacheRemoverRequ
     public bool BypassCache { get; }
     public string? CacheKey { get; }
     public string[]? CacheGroupKey => ["GetInstructorImages"];
-    public InstructorImageManager(IInstructorImageRepository instructorImageRepository, InstructorImageBusinessRules instructorImageBusinessRules,
-        ImageServiceBase imageServiceBase, IMapper mapper)
+
+    public InstructorImageManager(
+        IInstructorImageRepository instructorImageRepository,
+        InstructorImageBusinessRules instructorImageBusinessRules,
+        ImageServiceBase imageServiceBase,
+        IMapper mapper
+    )
     {
         _instructorImageRepository = instructorImageRepository;
         _instructorImageBusinessRules = instructorImageBusinessRules;
@@ -40,7 +45,13 @@ public class InstructorImageManager : IInstructorImageService, ICacheRemoverRequ
         CancellationToken cancellationToken = default
     )
     {
-        InstructorImage? instructorImage = await _instructorImageRepository.GetAsync(predicate, include, withDeleted, enableTracking, cancellationToken);
+        InstructorImage? instructorImage = await _instructorImageRepository.GetAsync(
+            predicate,
+            include,
+            withDeleted,
+            enableTracking,
+            cancellationToken
+        );
         return instructorImage;
     }
 
@@ -73,7 +84,6 @@ public class InstructorImageManager : IInstructorImageService, ICacheRemoverRequ
         InstructorImage instructorImage = new InstructorImage() { InstructorId = request.InstructorId };
         instructorImage.ImagePath = await _imageService.UploadAsync(file);
         return await _instructorImageRepository.AddAsync(instructorImage);
-
     }
 
     public async Task<InstructorImage> UpdateAsync(IFormFile file, UpdateInstructorImageRequest request)
@@ -93,6 +103,5 @@ public class InstructorImageManager : IInstructorImageService, ICacheRemoverRequ
 
         DeletedInstructorImageResponse response = _mapper.Map<DeletedInstructorImageResponse>(instructorImage);
         return response;
-
     }
 }

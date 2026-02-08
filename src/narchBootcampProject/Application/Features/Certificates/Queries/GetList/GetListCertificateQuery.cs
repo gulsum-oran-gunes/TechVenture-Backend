@@ -2,18 +2,20 @@ using Application.Features.Certificates.Constants;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
-using MediatR;
 using static Application.Features.Certificates.Constants.CertificatesOperationClaims;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Certificates.Queries.GetList;
 
-public class GetListCertificateQuery : IRequest<GetListResponse<GetListCertificateListItemDto>>, /*ISecuredRequest,*/ ICachableRequest
+public class GetListCertificateQuery
+    : IRequest<GetListResponse<GetListCertificateListItemDto>>, /*ISecuredRequest,*/
+        ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
 
@@ -24,7 +26,8 @@ public class GetListCertificateQuery : IRequest<GetListResponse<GetListCertifica
     public string? CacheGroupKey => "GetCertificates";
     public TimeSpan? SlidingExpiration { get; }
 
-    public class GetListCertificateQueryHandler : IRequestHandler<GetListCertificateQuery, GetListResponse<GetListCertificateListItemDto>>
+    public class GetListCertificateQueryHandler
+        : IRequestHandler<GetListCertificateQuery, GetListResponse<GetListCertificateListItemDto>>
     {
         private readonly ICertificateRepository _certificateRepository;
         private readonly IMapper _mapper;
@@ -35,17 +38,21 @@ public class GetListCertificateQuery : IRequest<GetListResponse<GetListCertifica
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListCertificateListItemDto>> Handle(GetListCertificateQuery request, CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListCertificateListItemDto>> Handle(
+            GetListCertificateQuery request,
+            CancellationToken cancellationToken
+        )
         {
             IPaginate<Certificate> certificates = await _certificateRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize, 
+                size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
                 include: c => c.Include(x => x.Bootcamp)
-
             );
 
-            GetListResponse<GetListCertificateListItemDto> response = _mapper.Map<GetListResponse<GetListCertificateListItemDto>>(certificates);
+            GetListResponse<GetListCertificateListItemDto> response = _mapper.Map<GetListResponse<GetListCertificateListItemDto>>(
+                certificates
+            );
             return response;
         }
     }

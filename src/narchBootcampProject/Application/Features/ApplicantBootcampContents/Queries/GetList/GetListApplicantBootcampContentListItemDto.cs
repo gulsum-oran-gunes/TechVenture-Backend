@@ -11,5 +11,4 @@ public class GetListApplicantBootcampContentListItemDto : IDto
     public int BootcampContentId { get; set; }
     public string BootcampContentVideoUrl { get; set; }
     public string BootcampContentContent { get; set; }
-
 }

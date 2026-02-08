@@ -14,5 +14,4 @@ public class GetByIdInstructorResponse : IResponse
     public string CompanyName { get; set; }
     public int InstructorImageId { get; set; }
     public string InstructorImagePath { get; set; }
-
 }

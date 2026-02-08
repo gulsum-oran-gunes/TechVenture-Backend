@@ -43,13 +43,13 @@ public class DeleteEmployeeCommand
             IEmployeeRepository employeeRepository,
             EmployeeBusinessRules employeeBusinessRules,
             IAuthService authService,
-            IUserOperationClaimService userOperationClaimService)
-            
+            IUserOperationClaimService userOperationClaimService
+        )
         {
             _mapper = mapper;
             _employeeRepository = employeeRepository;
             _employeeBusinessRules = employeeBusinessRules;
-           _authService = authService;
+            _authService = authService;
             _userOperationClaimService = userOperationClaimService;
         }
 

@@ -4,16 +4,21 @@ using Application.Features.Certificates.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
-using MediatR;
 using static Application.Features.Certificates.Constants.CertificatesOperationClaims;
 
 namespace Application.Features.Certificates.Commands.Delete;
 
-public class DeleteCertificateCommand : IRequest<DeletedCertificateResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class DeleteCertificateCommand
+    : IRequest<DeletedCertificateResponse>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest,
+        ITransactionalRequest
 {
     public int Id { get; set; }
 
@@ -29,17 +34,26 @@ public class DeleteCertificateCommand : IRequest<DeletedCertificateResponse>, IS
         private readonly ICertificateRepository _certificateRepository;
         private readonly CertificateBusinessRules _certificateBusinessRules;
 
-        public DeleteCertificateCommandHandler(IMapper mapper, ICertificateRepository certificateRepository,
-                                         CertificateBusinessRules certificateBusinessRules)
+        public DeleteCertificateCommandHandler(
+            IMapper mapper,
+            ICertificateRepository certificateRepository,
+            CertificateBusinessRules certificateBusinessRules
+        )
         {
             _mapper = mapper;
             _certificateRepository = certificateRepository;
             _certificateBusinessRules = certificateBusinessRules;
         }
 
-        public async Task<DeletedCertificateResponse> Handle(DeleteCertificateCommand request, CancellationToken cancellationToken)
+        public async Task<DeletedCertificateResponse> Handle(
+            DeleteCertificateCommand request,
+            CancellationToken cancellationToken
+        )
         {
-            Certificate? certificate = await _certificateRepository.GetAsync(predicate: c => c.Id == request.Id, cancellationToken: cancellationToken);
+            Certificate? certificate = await _certificateRepository.GetAsync(
+                predicate: c => c.Id == request.Id,
+                cancellationToken: cancellationToken
+            );
             await _certificateBusinessRules.CertificateShouldExistWhenSelected(certificate);
 
             await _certificateRepository.DeleteAsync(certificate!);

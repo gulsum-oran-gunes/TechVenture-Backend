@@ -1,21 +1,19 @@
-﻿using NArchitecture.Core.Persistence.Repositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NArchitecture.Core.Persistence.Repositories;
 
 namespace Domain.Entities;
-public class InstructorImage: Entity<int>
+
+public class InstructorImage : Entity<int>
 {
     public Guid InstructorId { get; set; }
     public string ImagePath { get; set; }
     public virtual Instructor? Instructor { get; set; }
 
-    public InstructorImage()
-    {
-        
-    }
+    public InstructorImage() { }
 
     public InstructorImage(int id, Guid ınstructorId, string ımagePath)
     {
@@ -23,5 +21,4 @@ public class InstructorImage: Entity<int>
         InstructorId = ınstructorId;
         ImagePath = ımagePath;
     }
-
 }

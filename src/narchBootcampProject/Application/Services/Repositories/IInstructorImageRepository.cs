@@ -3,6 +3,4 @@ using NArchitecture.Core.Persistence.Repositories;
 
 namespace Application.Services.Repositories;
 
-public interface IInstructorImageRepository : IAsyncRepository<InstructorImage, int>, IRepository<InstructorImage, int>
-{
-}
+public interface IInstructorImageRepository : IAsyncRepository<InstructorImage, int>, IRepository<InstructorImage, int> { }

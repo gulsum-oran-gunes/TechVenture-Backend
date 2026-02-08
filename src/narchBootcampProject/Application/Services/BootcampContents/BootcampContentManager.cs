@@ -1,9 +1,9 @@
+using System.Linq.Expressions;
 using Application.Features.BootcampContents.Rules;
 using Application.Services.Repositories;
-using NArchitecture.Core.Persistence.Paging;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
-using System.Linq.Expressions;
+using NArchitecture.Core.Persistence.Paging;
 
 namespace Application.Services.BootcampContents;
 
@@ -12,7 +12,10 @@ public class BootcampContentManager : IBootcampContentService
     private readonly IBootcampContentRepository _bootcampContentRepository;
     private readonly BootcampContentBusinessRules _bootcampContentBusinessRules;
 
-    public BootcampContentManager(IBootcampContentRepository bootcampContentRepository, BootcampContentBusinessRules bootcampContentBusinessRules)
+    public BootcampContentManager(
+        IBootcampContentRepository bootcampContentRepository,
+        BootcampContentBusinessRules bootcampContentBusinessRules
+    )
     {
         _bootcampContentRepository = bootcampContentRepository;
         _bootcampContentBusinessRules = bootcampContentBusinessRules;
@@ -26,7 +29,13 @@ public class BootcampContentManager : IBootcampContentService
         CancellationToken cancellationToken = default
     )
     {
-        BootcampContent? bootcampContent = await _bootcampContentRepository.GetAsync(predicate, include, withDeleted, enableTracking, cancellationToken);
+        BootcampContent? bootcampContent = await _bootcampContentRepository.GetAsync(
+            predicate,
+            include,
+            withDeleted,
+            enableTracking,
+            cancellationToken
+        );
         return bootcampContent;
     }
 

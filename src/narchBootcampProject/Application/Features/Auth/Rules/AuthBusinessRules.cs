@@ -80,6 +80,7 @@ public class AuthBusinessRules : BaseBusinessRules
         if (doesExists)
             await throwBusinessException(AuthMessages.UserMailAlreadyExists);
     }
+
     public async Task UserNameShouldBeNotExists(string userName)
     {
         bool doesExists = await _userRepository.AnyAsync(predicate: u => u.UserName == userName, enableTracking: false);

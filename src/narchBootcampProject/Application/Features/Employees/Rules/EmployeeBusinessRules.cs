@@ -39,9 +39,11 @@ public class EmployeeBusinessRules : BaseBusinessRules
         );
         await EmployeeShouldExistWhenSelected(employee);
     }
+
     public async Task CheckIfEmployeeNotExists(string userName, string email)
     {
         var isExists = await _employeeRepository.GetAsync(x => x.UserName == userName || x.Email == email);
-        if (isExists is not null) throw new BusinessException(EmployeesBusinessMessages.EmployeeExists);
+        if (isExists is not null)
+            throw new BusinessException(EmployeesBusinessMessages.EmployeeExists);
     }
 }

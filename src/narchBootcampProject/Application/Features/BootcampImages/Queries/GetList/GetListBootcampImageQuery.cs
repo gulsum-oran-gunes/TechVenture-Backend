@@ -13,10 +13,8 @@ using static Application.Features.BootcampImages.Constants.BootcampImagesOperati
 
 namespace Application.Features.BootcampImages.Queries.GetList;
 
-public class GetListBootcampImageQuery
-    : IRequest<GetListResponse<GetListBootcampImageListItemDto>>,
-        ISecuredRequest
-        //ICachableRequest
+public class GetListBootcampImageQuery : IRequest<GetListResponse<GetListBootcampImageListItemDto>>, ISecuredRequest
+//ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
 

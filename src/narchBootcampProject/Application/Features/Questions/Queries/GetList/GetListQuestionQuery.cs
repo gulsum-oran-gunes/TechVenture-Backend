@@ -44,7 +44,7 @@ public class GetListQuestionQuery : IRequest<GetListResponse<GetListQuestionList
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
-                include: b => b.Include(x=> x.Bootcamp)
+                include: b => b.Include(x => x.Bootcamp)
             );
 
             GetListResponse<GetListQuestionListItemDto> response = _mapper.Map<GetListResponse<GetListQuestionListItemDto>>(

@@ -30,7 +30,6 @@ public class ApplicantRegisterCommand : IRequest<RegisteredResponse>, ICacheRemo
     public string? CacheKey { get; }
 
     public string[]? CacheGroupKey => ["GetApplicants"];
-  
 
     public ApplicantRegisterCommand()
     {
@@ -91,7 +90,7 @@ public class ApplicantRegisterCommand : IRequest<RegisteredResponse>, ICacheRemo
                 {
                     FirstName = request.ApplicantRegisterDto.FirstName,
                     LastName = request.ApplicantRegisterDto.LastName,
-                  
+
                     UserName = request.ApplicantRegisterDto.UserName,
                     Email = request.ApplicantRegisterDto.Email,
                     PasswordHash = passwordHash,
@@ -111,15 +110,19 @@ public class ApplicantRegisterCommand : IRequest<RegisteredResponse>, ICacheRemo
 
             EmailAuthenticator emailAuthenticator = await _authenticatorService.CreateEmailAuthenticator(createdApplicant);
             EmailAuthenticator addedEmailAuthenticator = await _emailAuthenticatorRepository.AddAsync(emailAuthenticator);
-            
+
             var frontend = _configuration.GetValue<string>("FrontendAddress");
             var toEmailList = new List<MailboxAddress> { new(name: createdApplicant.Email, createdApplicant.Email) };
             var verifyUrl = $"{frontend}/verify?ActivationKey={HttpUtility.UrlEncode(addedEmailAuthenticator.ActivationKey)}";
-            
-            _mailService.SendMail(new Mail { ToList = toEmailList,
-             Subject = "TechItEasy — Verify Your Email",
-             TextBody = $"Hesabınızı doğrulamak için şu linke tıklayın: ${verifyUrl}",
-                HtmlBody = $@"
+
+            _mailService.SendMail(
+                new Mail
+                {
+                    ToList = toEmailList,
+                    Subject = "TechItEasy — Verify Your Email",
+                    TextBody = $"Hesabınızı doğrulamak için şu linke tıklayın: ${verifyUrl}",
+                    HtmlBody =
+                        $@"
                     <html>
                         <body>
                             <div class='container'>
@@ -136,9 +139,9 @@ public class ApplicantRegisterCommand : IRequest<RegisteredResponse>, ICacheRemo
                         </body>
                     </html>"
                 }
-                        );
+            );
 
-                        RegisteredResponse registeredResponse = new() { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
+            RegisteredResponse registeredResponse = new() { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
             return registeredResponse;
         }
     }

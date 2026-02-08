@@ -62,6 +62,5 @@ public class ApplicationEntitiesController : BaseController
         GetListApplicationDynamicQuery applicationDynamicQuery = new() { PageRequest = pageRequest, Dynamic = dynamic };
         GetListResponse<GetListApplicationEntityListItemDto> response = await Mediator.Send(applicationDynamicQuery);
         return Ok(response);
-
     }
 }

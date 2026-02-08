@@ -8,6 +8,5 @@ public class CreateApplicationEntityCommandValidator : AbstractValidator<CreateA
     {
         RuleFor(c => c.ApplicantId).NotEmpty();
         RuleFor(c => c.BootcampId).NotEmpty();
-       
     }
 }

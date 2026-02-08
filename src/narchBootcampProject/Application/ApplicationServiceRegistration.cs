@@ -1,14 +1,18 @@
 using System.Reflection;
+using Application.Services.ApplicantBootcampContents;
 using Application.Services.Applicants;
 using Application.Services.ApplicationEntities;
 using Application.Services.ApplicationStates;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.Blacklists;
+using Application.Services.BootcampContents;
 using Application.Services.BootcampImages;
 using Application.Services.Bootcamps;
 using Application.Services.BootcampStates;
+using Application.Services.Certificates;
 using Application.Services.Employees;
+using Application.Services.InstructorImages;
 using Application.Services.Instructors;
 using Application.Services.Questions;
 using Application.Services.QuizQuestions;
@@ -33,10 +37,6 @@ using NArchitecture.Core.Localization.Resource.Yaml.DependencyInjection;
 using NArchitecture.Core.Mailing;
 using NArchitecture.Core.Mailing.MailKit;
 using NArchitecture.Core.Security.DependencyInjection;
-using Application.Services.BootcampContents;
-using Application.Services.ApplicantBootcampContents;
-using Application.Services.InstructorImages;
-using Application.Services.Certificates;
 
 namespace Application;
 

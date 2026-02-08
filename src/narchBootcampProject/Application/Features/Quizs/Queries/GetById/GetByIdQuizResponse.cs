@@ -14,5 +14,4 @@ public class GetByIdQuizResponse : IResponse
     public DateTime? StartTime { get; set; }
     public DateTime? EndTime { get; set; }
     public List<Question> Questions { get; set; }
-
 }

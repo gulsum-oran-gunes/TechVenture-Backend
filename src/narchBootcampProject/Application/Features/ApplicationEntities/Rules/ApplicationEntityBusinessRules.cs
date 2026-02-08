@@ -1,3 +1,4 @@
+using System.Threading;
 using Application.Features.Applicants.Rules;
 using Application.Features.ApplicationEntities.Constants;
 using Application.Features.ApplicationStates.Rules;
@@ -11,7 +12,6 @@ using Domain.Entities;
 using NArchitecture.Core.Application.Rules;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
-using System.Threading;
 
 namespace Application.Features.ApplicationEntities.Rules;
 
@@ -24,10 +24,14 @@ public class ApplicationEntityBusinessRules : BaseBusinessRules
     private readonly IBootcampService _bootcampService;
     private readonly IApplicationStateService _applicationStateService;
 
-    public ApplicationEntityBusinessRules(IApplicationEntityRepository applicationEntityRepository, 
-        ILocalizationService localizationService, IBlacklistService blacklistService, 
-        IApplicantService applicantService, IBootcampService bootcampService,
-        IApplicationStateService applicationStateService)
+    public ApplicationEntityBusinessRules(
+        IApplicationEntityRepository applicationEntityRepository,
+        ILocalizationService localizationService,
+        IBlacklistService blacklistService,
+        IApplicantService applicantService,
+        IBootcampService bootcampService,
+        IApplicationStateService applicationStateService
+    )
     {
         _applicationEntityRepository = applicationEntityRepository;
         _localizationService = localizationService;
@@ -62,8 +66,7 @@ public class ApplicationEntityBusinessRules : BaseBusinessRules
         await ApplicationEntityShouldExistWhenSelected(applicationEntity);
     }
 
-
-    public bool IfApplicantApplied( int? bootcampId,Guid? applicantId)
+    public bool IfApplicantApplied(int? bootcampId, Guid? applicantId)
     {
         var application = _applicationEntityRepository.Get(
             predicate: abc => abc.ApplicantId == applicantId && abc.BootcampId == bootcampId,
@@ -76,31 +79,40 @@ public class ApplicationEntityBusinessRules : BaseBusinessRules
         //Detail sayfas�nda o kullan�c� ba�vurabilir mi kontrol etmek i�in
     }
 
-
     public async Task CheckIfApplicantBlacklist(Guid applicantId)
     {
         var applicant = await _blacklistService.GetAsync(predicate: a => a.ApplicantId == applicantId);
-        if (applicant is not null) throw new BusinessException(ApplicationEntitiesBusinessMessages.ApplicantInBlacklist);
+        if (applicant is not null)
+            throw new BusinessException(ApplicationEntitiesBusinessMessages.ApplicantInBlacklist);
     }
+
     public async Task CheckIfApplicantExists(Guid applicantId)
     {
         var applicantIdExists = await _applicantService.GetAsync(predicate: a => a.Id == applicantId);
-        if (applicantIdExists is null) throw new BusinessException(ApplicationEntitiesBusinessMessages.ApplicantIdNotExists);
+        if (applicantIdExists is null)
+            throw new BusinessException(ApplicationEntitiesBusinessMessages.ApplicantIdNotExists);
     }
+
     public async Task CheckIfBootcampExists(int bootcampId)
     {
         var bootcamp = await _bootcampService.GetAsync(predicate: b => b.Id == bootcampId);
-        if (bootcamp is null) throw new BusinessException(ApplicationEntitiesBusinessMessages.BootcampIdNotExists);
+        if (bootcamp is null)
+            throw new BusinessException(ApplicationEntitiesBusinessMessages.BootcampIdNotExists);
     }
+
     public async Task CheckIfApplicationStateExist(int applicationStateId)
     {
         var applicationState = await _applicationStateService.GetAsync(predicate: a => a.Id == applicationStateId);
-        if (applicationState is null) throw new BusinessException(ApplicationEntitiesBusinessMessages.ApplicationStateIdNotExists);
-    }
-    public async Task CheckIfApplicantApplicationExists(Guid applicantId, int bootcampId)
-    {
-        var isExists = await _applicationEntityRepository.GetAsync(a => a.ApplicantId == applicantId && a.BootcampId == bootcampId);
-        if (isExists is not null) throw new BusinessException(ApplicationEntitiesBusinessMessages.ApplicantApplicationExists);
+        if (applicationState is null)
+            throw new BusinessException(ApplicationEntitiesBusinessMessages.ApplicationStateIdNotExists);
     }
 
+    public async Task CheckIfApplicantApplicationExists(Guid applicantId, int bootcampId)
+    {
+        var isExists = await _applicationEntityRepository.GetAsync(a =>
+            a.ApplicantId == applicantId && a.BootcampId == bootcampId
+        );
+        if (isExists is not null)
+            throw new BusinessException(ApplicationEntitiesBusinessMessages.ApplicantApplicationExists);
+    }
 }

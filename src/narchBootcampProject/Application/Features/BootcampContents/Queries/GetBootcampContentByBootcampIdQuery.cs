@@ -1,4 +1,9 @@
-﻿using Application.Features.ApplicantBootcampContents.Rules;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Application.Features.ApplicantBootcampContents.Rules;
 using Application.Features.BootcampContents.Queries.GetList;
 using Application.Features.BootcampContents.Rules;
 using Application.Features.Bootcamps.Queries.GetList;
@@ -10,19 +15,15 @@ using Microsoft.EntityFrameworkCore;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.BootcampContents.Queries;
+
 public class GetBootcampContentByBootcampIdQuery : IRequest<GetListResponse<GetListBootcampContentListItemDto>> //, ISecuredRequest, ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
     public int BootcampId { get; set; }
     public Guid? ApplicantId { get; set; }
-  
+
     //public string[] Roles => [Admin, Read];
 
     //public bool BypassCache { get; }
@@ -37,8 +38,11 @@ public class GetBootcampContentByBootcampIdQuery : IRequest<GetListResponse<GetL
         private readonly IMapper _mapper;
         private readonly BootcampContentBusinessRules _bootcampContentBusinessRules;
 
-        public GetBootcampContentByBootcampIdQueryHandler(IBootcampContentRepository bootcampContentRepository, 
-            IMapper mapper, BootcampContentBusinessRules bootcampContentBusinessRules)
+        public GetBootcampContentByBootcampIdQueryHandler(
+            IBootcampContentRepository bootcampContentRepository,
+            IMapper mapper,
+            BootcampContentBusinessRules bootcampContentBusinessRules
+        )
         {
             _bootcampContentRepository = bootcampContentRepository;
             _mapper = mapper;
@@ -58,25 +62,30 @@ public class GetBootcampContentByBootcampIdQuery : IRequest<GetListResponse<GetL
                 include: b => b.Include(b => b.Bootcamp)
             );
 
-           
-
-            GetListResponse<GetListBootcampContentListItemDto> response = _mapper.Map<GetListResponse<GetListBootcampContentListItemDto>>
-                (bootcampContents,
-                 options => options.AfterMap((source, destination) => destination.Items.ToList().ForEach(
-                 item => 
-                 {
-                     item.HasApplicantBootcampContent =
-                    _bootcampContentBusinessRules.HasApplicantBootcampContent(request.ApplicantId, item.Id);
-                     item.IfApplicantPassed=
-                   _bootcampContentBusinessRules.IfApplicantPassed(request.ApplicantId, item.BootcampId);
-                 }
-
-                    ))
-           
-                 );
+            GetListResponse<GetListBootcampContentListItemDto> response = _mapper.Map<
+                GetListResponse<GetListBootcampContentListItemDto>
+            >(
+                bootcampContents,
+                options =>
+                    options.AfterMap(
+                        (source, destination) =>
+                            destination
+                                .Items.ToList()
+                                .ForEach(item =>
+                                {
+                                    item.HasApplicantBootcampContent = _bootcampContentBusinessRules.HasApplicantBootcampContent(
+                                        request.ApplicantId,
+                                        item.Id
+                                    );
+                                    item.IfApplicantPassed = _bootcampContentBusinessRules.IfApplicantPassed(
+                                        request.ApplicantId,
+                                        item.BootcampId
+                                    );
+                                })
+                    )
+            );
 
             return response;
-
         }
     }
 }

@@ -21,14 +21,25 @@ public class MappingProfiles : Profile
         CreateMap<Instructor, DeleteInstructorCommand>().ReverseMap();
         CreateMap<Instructor, DeletedInstructorResponse>().ReverseMap();
         CreateMap<Instructor, GetByIdInstructorResponse>()
-        .ForMember(destinationMember: x => x.InstructorImagePath, memberOptions: opt => opt.MapFrom(x => x.InstructorImages.FirstOrDefault().ImagePath))
-        .ForMember(destinationMember: x => x.InstructorImageId, memberOptions: opt => opt.MapFrom(x => x.InstructorImages.FirstOrDefault().Id));
-       
+            .ForMember(
+                destinationMember: x => x.InstructorImagePath,
+                memberOptions: opt => opt.MapFrom(x => x.InstructorImages.FirstOrDefault().ImagePath)
+            )
+            .ForMember(
+                destinationMember: x => x.InstructorImageId,
+                memberOptions: opt => opt.MapFrom(x => x.InstructorImages.FirstOrDefault().Id)
+            );
+
         CreateMap<Instructor, GetListInstructorListItemDto>()
-        .ForMember(destinationMember: x => x.InstructorImagePath, memberOptions: opt => opt.MapFrom(x => x.InstructorImages.FirstOrDefault().ImagePath))
-        .ForMember(destinationMember: x => x.InstructorImageId, memberOptions: opt => opt.MapFrom(x => x.InstructorImages.FirstOrDefault().Id));
-       
+            .ForMember(
+                destinationMember: x => x.InstructorImagePath,
+                memberOptions: opt => opt.MapFrom(x => x.InstructorImages.FirstOrDefault().ImagePath)
+            )
+            .ForMember(
+                destinationMember: x => x.InstructorImageId,
+                memberOptions: opt => opt.MapFrom(x => x.InstructorImages.FirstOrDefault().Id)
+            );
+
         CreateMap<IPaginate<Instructor>, GetListResponse<GetListInstructorListItemDto>>().ReverseMap();
-    
     }
 }

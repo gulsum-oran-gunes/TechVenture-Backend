@@ -18,8 +18,6 @@ namespace Application.Services.BootcampImages;
 
 public class BootcampImageManager : IBootcampImageService, ICacheRemoverRequest
 {
-
-
     private readonly IBootcampImageRepository _bootcampImageRepository;
     private readonly BootcampImageBusinessRules _bootcampImageBusinessRules;
     private readonly ImageServiceBase _imageService;
@@ -34,7 +32,6 @@ public class BootcampImageManager : IBootcampImageService, ICacheRemoverRequest
         BootcampImageBusinessRules bootcampImageBusinessRules,
         ImageServiceBase imageService,
         IMapper mapper
-
     )
     {
         _bootcampImageRepository = bootcampImageRepository;
@@ -71,22 +68,16 @@ public class BootcampImageManager : IBootcampImageService, ICacheRemoverRequest
 
     public async Task<DeletedBootcampImageResponse> Delete(int id)
     {
-        BootcampImage bootcampImage =  await _bootcampImageRepository.GetAsync(x => x.Id == id);
+        BootcampImage bootcampImage = await _bootcampImageRepository.GetAsync(x => x.Id == id);
         await _imageService.DeleteAsync(bootcampImage.ImagePath);
         await _bootcampImageRepository.DeleteAsync(bootcampImage, true);
 
         DeletedBootcampImageResponse response = _mapper.Map<DeletedBootcampImageResponse>(bootcampImage);
         return response;
-        
-
     }
-
-   
 
     public Task<List<BootcampImage>> GetImagesByBootcampId(int id)
     {
         throw new NotImplementedException();
     }
-
-
 }

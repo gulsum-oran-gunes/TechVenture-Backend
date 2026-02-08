@@ -11,7 +11,7 @@ using static Application.Features.Bootcamps.Constants.BootcampsOperationClaims;
 
 namespace Application.Features.Bootcamps.Queries.GetById;
 
-public class GetByIdBootcampQuery : IRequest<GetByIdBootcampResponse>/*, ISecuredRequest*/
+public class GetByIdBootcampQuery : IRequest<GetByIdBootcampResponse> /*, ISecuredRequest*/
 {
     public int Id { get; set; }
     public Guid? ApplicantId { get; set; }
@@ -43,18 +43,17 @@ public class GetByIdBootcampQuery : IRequest<GetByIdBootcampResponse>/*, ISecure
             Bootcamp? bootcamp = await _bootcampRepository.GetAsync(
                 predicate: b => b.Id == request.Id,
                 cancellationToken: cancellationToken,
-                 include: x => x.Include(p => p.Instructor).ThenInclude(p => p.InstructorImages).Include(p => p.BootcampState).Include(p => p.BootcampImages)
+                include: x =>
+                    x.Include(p => p.Instructor)
+                        .ThenInclude(p => p.InstructorImages)
+                        .Include(p => p.BootcampState)
+                        .Include(p => p.BootcampImages)
             );
             await _bootcampBusinessRules.BootcampShouldExistWhenSelected(bootcamp);
-         
+
             GetByIdBootcampResponse response = _mapper.Map<GetByIdBootcampResponse>(bootcamp);
             response.IfApplicantApplied = _applicationEntityBusinessRules.IfApplicantApplied(request.Id, request.ApplicantId);
-            return response; 
-            
-         
-           
+            return response;
         }
-
-
     }
 }

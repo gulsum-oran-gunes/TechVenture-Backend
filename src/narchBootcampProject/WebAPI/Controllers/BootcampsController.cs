@@ -46,7 +46,7 @@ public class BootcampsController : BaseController
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById([FromRoute] int id, Guid? applicantId)
     {
-        GetByIdBootcampQuery getByIdBootcampQuery = new() { Id=id, ApplicantId = applicantId };
+        GetByIdBootcampQuery getByIdBootcampQuery = new() { Id = id, ApplicantId = applicantId };
         GetByIdBootcampResponse response = await Mediator.Send(getByIdBootcampQuery);
         return Ok(response);
     }
@@ -58,6 +58,7 @@ public class BootcampsController : BaseController
         GetListResponse<GetListBootcampListItemDto> response = await Mediator.Send(getListBootcampQuery);
         return Ok(response);
     }
+
     [HttpGet("getbootcampbyinstructorid")]
     public async Task<IActionResult> GetListBootcampByInstructorId([FromQuery] PageRequest pageRequest, Guid instructorId)
     {
@@ -72,9 +73,5 @@ public class BootcampsController : BaseController
         GetListBootcampDynamicQuery bootcampDynamicQuery = new() { PageRequest = pageRequest, Dynamic = dynamic };
         GetListResponse<GetListBootcampListItemDto> response = await Mediator.Send(bootcampDynamicQuery);
         return Ok(response);
-
     }
-
-
-
 }

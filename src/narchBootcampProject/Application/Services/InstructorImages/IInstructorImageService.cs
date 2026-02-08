@@ -1,11 +1,11 @@
-using NArchitecture.Core.Persistence.Paging;
-using Domain.Entities;
-using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 using Application.Features.BootcampImages.Commands.Delete;
-using Application.Services.BootcampImages;
-using Microsoft.AspNetCore.Http;
 using Application.Features.InstructorImages.Commands.Delete;
+using Application.Services.BootcampImages;
+using Domain.Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Query;
+using NArchitecture.Core.Persistence.Paging;
 
 namespace Application.Services.InstructorImages;
 
@@ -31,6 +31,4 @@ public interface IInstructorImageService
     Task<InstructorImage> AddAsync(IFormFile file, InstructorImageRequest request);
     Task<InstructorImage> UpdateAsync(IFormFile file, UpdateInstructorImageRequest request);
     Task<DeletedInstructorImageResponse> DeleteAsync(int id);
-
-   
 }

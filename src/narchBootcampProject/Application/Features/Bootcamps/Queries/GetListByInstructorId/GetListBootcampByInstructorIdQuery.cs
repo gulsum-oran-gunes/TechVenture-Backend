@@ -15,6 +15,7 @@ public class GetListBootcampByInstructorIdQuery : IRequest<GetListResponse<GetLi
 {
     public PageRequest PageRequest { get; set; }
     public Guid InstructorId { get; set; }
+
     //public string[] Roles => [Admin, Read];
 
     public bool BypassCache { get; }
@@ -45,7 +46,7 @@ public class GetListBootcampByInstructorIdQuery : IRequest<GetListResponse<GetLi
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
-                include: p => p.Include(x => x.Instructor).Include(p => p.BootcampState).Include(b=>b.BootcampImages)
+                include: p => p.Include(x => x.Instructor).Include(p => p.BootcampState).Include(b => b.BootcampImages)
             );
 
             GetListResponse<GetListBootcampListItemDto> response = _mapper.Map<GetListResponse<GetListBootcampListItemDto>>(

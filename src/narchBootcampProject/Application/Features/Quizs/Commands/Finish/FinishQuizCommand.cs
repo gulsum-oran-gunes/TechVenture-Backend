@@ -80,7 +80,6 @@ public class FinishQuizCommand
                 }
             }
             bool isPassed = correctAnswersCount >= 4;
-            
 
             Result result = new Result
             {
@@ -88,7 +87,6 @@ public class FinishQuizCommand
                 WrongAnswers = wrongAnswersCount,
                 QuizId = request.QuizId,
                 IsPassed = isPassed,
-               
             };
             await _resultRepository.AddAsync(result);
 

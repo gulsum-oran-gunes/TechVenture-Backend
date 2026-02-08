@@ -3,10 +3,10 @@ using Application.Features.BootcampContents.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
-using NArchitecture.Core.Application.Pipelines.Authorization;
 using MediatR;
-using static Application.Features.BootcampContents.Constants.BootcampContentsOperationClaims;
 using Microsoft.EntityFrameworkCore;
+using NArchitecture.Core.Application.Pipelines.Authorization;
+using static Application.Features.BootcampContents.Constants.BootcampContentsOperationClaims;
 
 namespace Application.Features.BootcampContents.Queries.GetById;
 
@@ -22,19 +22,28 @@ public class GetByIdBootcampContentQuery : IRequest<GetByIdBootcampContentRespon
         private readonly IBootcampContentRepository _bootcampContentRepository;
         private readonly BootcampContentBusinessRules _bootcampContentBusinessRules;
 
-        public GetByIdBootcampContentQueryHandler(IMapper mapper, IBootcampContentRepository bootcampContentRepository, BootcampContentBusinessRules bootcampContentBusinessRules)
+        public GetByIdBootcampContentQueryHandler(
+            IMapper mapper,
+            IBootcampContentRepository bootcampContentRepository,
+            BootcampContentBusinessRules bootcampContentBusinessRules
+        )
         {
             _mapper = mapper;
             _bootcampContentRepository = bootcampContentRepository;
             _bootcampContentBusinessRules = bootcampContentBusinessRules;
         }
 
-        public async Task<GetByIdBootcampContentResponse> Handle(GetByIdBootcampContentQuery request, CancellationToken cancellationToken)
+        public async Task<GetByIdBootcampContentResponse> Handle(
+            GetByIdBootcampContentQuery request,
+            CancellationToken cancellationToken
+        )
         {
-            BootcampContent? bootcampContent = await _bootcampContentRepository.GetAsync(predicate: bc => bc.Id == request.Id, cancellationToken: cancellationToken,
-                include: x=> x.Include(b => b.Bootcamp)) ;
+            BootcampContent? bootcampContent = await _bootcampContentRepository.GetAsync(
+                predicate: bc => bc.Id == request.Id,
+                cancellationToken: cancellationToken,
+                include: x => x.Include(b => b.Bootcamp)
+            );
             await _bootcampContentBusinessRules.BootcampContentShouldExistWhenSelected(bootcampContent);
-
 
             GetByIdBootcampContentResponse response = _mapper.Map<GetByIdBootcampContentResponse>(bootcampContent);
             return response;

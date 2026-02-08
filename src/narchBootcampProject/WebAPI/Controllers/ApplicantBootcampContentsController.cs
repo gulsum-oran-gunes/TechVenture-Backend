@@ -3,9 +3,9 @@ using Application.Features.ApplicantBootcampContents.Commands.Delete;
 using Application.Features.ApplicantBootcampContents.Commands.Update;
 using Application.Features.ApplicantBootcampContents.Queries.GetById;
 using Application.Features.ApplicantBootcampContents.Queries.GetList;
+using Microsoft.AspNetCore.Mvc;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
-using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
 
@@ -22,7 +22,9 @@ public class ApplicantBootcampContentsController : BaseController
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] UpdateApplicantBootcampContentCommand updateApplicantBootcampContentCommand)
+    public async Task<IActionResult> Update(
+        [FromBody] UpdateApplicantBootcampContentCommand updateApplicantBootcampContentCommand
+    )
     {
         UpdatedApplicantBootcampContentResponse response = await Mediator.Send(updateApplicantBootcampContentCommand);
 
@@ -32,7 +34,9 @@ public class ApplicantBootcampContentsController : BaseController
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
-        DeletedApplicantBootcampContentResponse response = await Mediator.Send(new DeleteApplicantBootcampContentCommand { Id = id });
+        DeletedApplicantBootcampContentResponse response = await Mediator.Send(
+            new DeleteApplicantBootcampContentCommand { Id = id }
+        );
 
         return Ok(response);
     }
@@ -40,7 +44,9 @@ public class ApplicantBootcampContentsController : BaseController
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
-        GetByIdApplicantBootcampContentResponse response = await Mediator.Send(new GetByIdApplicantBootcampContentQuery { Id = id });
+        GetByIdApplicantBootcampContentResponse response = await Mediator.Send(
+            new GetByIdApplicantBootcampContentQuery { Id = id }
+        );
         return Ok(response);
     }
 
@@ -48,7 +54,9 @@ public class ApplicantBootcampContentsController : BaseController
     public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
     {
         GetListApplicantBootcampContentQuery getListApplicantBootcampContentQuery = new() { PageRequest = pageRequest };
-        GetListResponse<GetListApplicantBootcampContentListItemDto> response = await Mediator.Send(getListApplicantBootcampContentQuery);
+        GetListResponse<GetListApplicantBootcampContentListItemDto> response = await Mediator.Send(
+            getListApplicantBootcampContentQuery
+        );
         return Ok(response);
     }
 }

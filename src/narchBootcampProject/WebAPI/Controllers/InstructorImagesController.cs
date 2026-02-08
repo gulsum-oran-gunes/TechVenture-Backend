@@ -3,21 +3,18 @@ using Application.Features.InstructorImages.Commands.Delete;
 using Application.Features.InstructorImages.Commands.Update;
 using Application.Features.InstructorImages.Queries.GetById;
 using Application.Features.InstructorImages.Queries.GetList;
+using Application.Services.BootcampImages;
+using Application.Services.InstructorImages;
+using Microsoft.AspNetCore.Mvc;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
-using Microsoft.AspNetCore.Mvc;
-using Application.Services.InstructorImages;
-using Application.Services.BootcampImages;
 
 namespace WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 public class InstructorImagesController : BaseController
-
-
 {
-
     private readonly IInstructorImageService _instructorImageService;
 
     public InstructorImagesController(IInstructorImageService instructorImageService)

@@ -14,7 +14,7 @@ using NArchitecture.Core.Security.JWT;
 
 namespace Application.Features.Auth.Commands.Register.Employee;
 
-public class EmployeeRegisterCommand : IRequest<RegisteredResponse> , ICacheRemoverRequest
+public class EmployeeRegisterCommand : IRequest<RegisteredResponse>, ICacheRemoverRequest
 {
     public EmployeeRegisterDto EmployeeRegisterDto { get; set; }
     public string IpAddress { get; set; }
@@ -46,10 +46,8 @@ public class EmployeeRegisterCommand : IRequest<RegisteredResponse> , ICacheRemo
         public RegisterCommandHandler(
             IAuthService authService,
             AuthBusinessRules authBusinessRules,
-            IEmployeeRepository employeeRepository
-            ,
+            IEmployeeRepository employeeRepository,
             IUserOperationClaimRepository userOperationClaimRepository
-
         )
         {
             _authService = authService;

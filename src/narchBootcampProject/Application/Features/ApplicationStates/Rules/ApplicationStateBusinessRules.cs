@@ -42,9 +42,11 @@ public class ApplicationStateBusinessRules : BaseBusinessRules
         );
         await ApplicationStateShouldExistWhenSelected(applicationState);
     }
+
     public async Task CheckIfApplicationStateNameExists(string applicationStateName)
     {
         var isExists = await _applicationStateRepository.GetAsync(x => x.Name == applicationStateName);
-        if (isExists is not null) throw new BusinessException(ApplicationStatesBusinessMessages.ApplicationStateExists);
+        if (isExists is not null)
+            throw new BusinessException(ApplicationStatesBusinessMessages.ApplicationStateExists);
     }
 }

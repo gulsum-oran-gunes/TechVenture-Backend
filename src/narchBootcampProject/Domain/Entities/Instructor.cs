@@ -10,7 +10,7 @@ namespace Domain.Entities;
 public class Instructor : User
 {
     public string CompanyName { get; set; }
-    
+
     public ICollection<Bootcamp> Bootcamps { get; set; }
     public virtual ICollection<InstructorImage> InstructorImages { get; set; }
 
@@ -23,6 +23,5 @@ public class Instructor : User
     public Instructor(string companyName)
     {
         CompanyName = companyName;
-       
     }
 }

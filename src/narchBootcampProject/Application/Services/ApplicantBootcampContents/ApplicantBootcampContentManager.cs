@@ -1,9 +1,9 @@
+using System.Linq.Expressions;
 using Application.Features.ApplicantBootcampContents.Rules;
 using Application.Services.Repositories;
-using NArchitecture.Core.Persistence.Paging;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
-using System.Linq.Expressions;
+using NArchitecture.Core.Persistence.Paging;
 
 namespace Application.Services.ApplicantBootcampContents;
 
@@ -12,7 +12,10 @@ public class ApplicantBootcampContentManager : IApplicantBootcampContentService
     private readonly IApplicantBootcampContentRepository _applicantBootcampContentRepository;
     private readonly ApplicantBootcampContentBusinessRules _applicantBootcampContentBusinessRules;
 
-    public ApplicantBootcampContentManager(IApplicantBootcampContentRepository applicantBootcampContentRepository, ApplicantBootcampContentBusinessRules applicantBootcampContentBusinessRules)
+    public ApplicantBootcampContentManager(
+        IApplicantBootcampContentRepository applicantBootcampContentRepository,
+        ApplicantBootcampContentBusinessRules applicantBootcampContentBusinessRules
+    )
     {
         _applicantBootcampContentRepository = applicantBootcampContentRepository;
         _applicantBootcampContentBusinessRules = applicantBootcampContentBusinessRules;
@@ -26,7 +29,13 @@ public class ApplicantBootcampContentManager : IApplicantBootcampContentService
         CancellationToken cancellationToken = default
     )
     {
-        ApplicantBootcampContent? applicantBootcampContent = await _applicantBootcampContentRepository.GetAsync(predicate, include, withDeleted, enableTracking, cancellationToken);
+        ApplicantBootcampContent? applicantBootcampContent = await _applicantBootcampContentRepository.GetAsync(
+            predicate,
+            include,
+            withDeleted,
+            enableTracking,
+            cancellationToken
+        );
         return applicantBootcampContent;
     }
 
@@ -56,21 +65,30 @@ public class ApplicantBootcampContentManager : IApplicantBootcampContentService
 
     public async Task<ApplicantBootcampContent> AddAsync(ApplicantBootcampContent applicantBootcampContent)
     {
-        ApplicantBootcampContent addedApplicantBootcampContent = await _applicantBootcampContentRepository.AddAsync(applicantBootcampContent);
+        ApplicantBootcampContent addedApplicantBootcampContent = await _applicantBootcampContentRepository.AddAsync(
+            applicantBootcampContent
+        );
 
         return addedApplicantBootcampContent;
     }
 
     public async Task<ApplicantBootcampContent> UpdateAsync(ApplicantBootcampContent applicantBootcampContent)
     {
-        ApplicantBootcampContent updatedApplicantBootcampContent = await _applicantBootcampContentRepository.UpdateAsync(applicantBootcampContent);
+        ApplicantBootcampContent updatedApplicantBootcampContent = await _applicantBootcampContentRepository.UpdateAsync(
+            applicantBootcampContent
+        );
 
         return updatedApplicantBootcampContent;
     }
 
-    public async Task<ApplicantBootcampContent> DeleteAsync(ApplicantBootcampContent applicantBootcampContent, bool permanent = false)
+    public async Task<ApplicantBootcampContent> DeleteAsync(
+        ApplicantBootcampContent applicantBootcampContent,
+        bool permanent = false
+    )
     {
-        ApplicantBootcampContent deletedApplicantBootcampContent = await _applicantBootcampContentRepository.DeleteAsync(applicantBootcampContent);
+        ApplicantBootcampContent deletedApplicantBootcampContent = await _applicantBootcampContentRepository.DeleteAsync(
+            applicantBootcampContent
+        );
 
         return deletedApplicantBootcampContent;
     }

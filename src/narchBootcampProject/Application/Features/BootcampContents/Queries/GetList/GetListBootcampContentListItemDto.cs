@@ -11,6 +11,4 @@ public class GetListBootcampContentListItemDto : IDto
     public string? Content { get; set; }
     public bool? HasApplicantBootcampContent { get; set; }
     public bool? IfApplicantPassed { get; set; }
-
-
 }
