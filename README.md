@@ -1,118 +1,197 @@
-<p align="center">
-  <a href="https://github.com/kodlamaio-projects/nArchitecture/graphs/contributors"><img src="https://img.shields.io/github/contributors/kodlamaio-projects/nArchitecture.svg?style=for-the-badge"></a>
-  <a href="https://github.com/kodlamaio-projects/nArchitecture/network/members"><img src="https://img.shields.io/github/forks/kodlamaio-projects/nArchitecture.svg?style=for-the-badge"></a>
-  <a href="https://github.com/kodlamaio-projects/nArchitecture/stargazers"><img src="https://img.shields.io/github/stars/kodlamaio-projects/nArchitecture.svg?style=for-the-badge"></a>
-  <a href="https://github.com/kodlamaio-projects/nArchitecture/issues"><img src="https://img.shields.io/github/issues/kodlamaio-projects/nArchitecture.svg?style=for-the-badge"></a>
-  <a href="https://github.com/kodlamaio-projects/nArchitecture/blob/master/LICENSE"><img src="https://img.shields.io/github/license/kodlamaio-projects/nArchitecture.svg?style=for-the-badge"></a>
-</p><br />
+# Tobeto3A NArchitecture Bootcamp Project
 
-<p align="center">
-  <a href="https://github.com/kodlamaio-projects/nArchitecture"><img src="https://user-images.githubusercontent.com/53148314/194872467-827dc967-acee-4bca-88a2-59ed5695bebf.png" height="125"></a>
-  <h3 align="center">nArchitecture Project
-</h3>
-  <p align="center">
-    <!-- PROJECT_DESCRIPTION -->
-    <!-- <br />
-    <a href="https://github.com/kodlamaio-projects/nArchitecture"><strong>Explore the docs »</strong></a>
-    <br /> -->
-    <!-- <br />
-    <a href="https://github.com/kodlamaio-projects/nArchitecture">View Demo</a>
-    · -->
-    <a href="https://github.com/kodlamaio-projects/nArchitecture/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/kodlamaio-projects/nArchitecture/discussions">Request Feature</a>
-  </p>
-</p>
+This repository contains the **backend** of the project.  
+Frontend repository: https://github.com/gulsum-oran-gunes/BootcampProjectAngular
 
-## 💻 About The Project
+A full‑scope bootcamp project built on .NET 8 that delivers a production‑style backend for a bootcamp management platform. The system covers user onboarding, bootcamp management, applications, quizzes, results, certificates, and media management. It uses layered architecture, CQRS with MediatR, and a clean separation of concerns to keep the codebase maintainable as it grows.
 
-As Kodlama.io, we decided to share examples of completed projects. Inspired by Clean Architecture, nArchitecture is a monolith project that showcases advanced development techniques. The project includes Clean Architecture, CQRS, Advanced Repository, Dynamic Querying, JWT, OTP, Google & Microsoft Auth, Role-Based Management, Distributed Caching (Redis), Logging (Serilog), Elastic Search, [Code Generator](https://github.com/kodlamaio-projects/nArchitecture.Gen) and much more. By contributing, you can support the project and learn new things.
+## Live Demo
 
-### Built With
+- App: https://techventure-web.vercel.app
 
-[![](https://img.shields.io/badge/.NET%20Core-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://learn.microsoft.com/tr-tr/dotnet/welcome)
 
-## ⚙️ Getting Started
+## Tech Stack (Highlights)
 
-To get a local copy up and running follow these simple steps.
+- .NET 8, ASP.NET Core Web API
+- Entity Framework Core, SQL Server
+- MediatR (CQRS), AutoMapper
+- JWT Authentication (Microsoft.AspNetCore.Authentication.JwtBearer)
+- Serilog (file logging)
+- Redis cache (StackExchange.Redis)
+- Swagger (Swashbuckle)
+- Emailing (NArchitecture.Core.Mailing)
+- Dynamic Query (NArchitecture.Core.Persistence.Dynamic)
+- Cloudinary, QuestPDF
 
-### Prerequisites
+## Packages & Integrations (Selected)
 
-- .NET 7
+- **QuestPDF**: Generates PDF documents such as certificates and reports.
+- **CloudinaryDotNet**: Uploads and manages images for instructors/bootcamps.
+- **Swashbuckle.AspNetCore**: Swagger UI and API documentation.
+- **Microsoft.AspNetCore.Authentication.JwtBearer** + **System.IdentityModel.Tokens.Jwt**: JWT authentication flow.
+- **MediatR**: CQRS command/query pipeline.
+- **AutoMapper** (+ ExpressionMapping): DTO/entity mapping.
+- **Microsoft.EntityFrameworkCore** (SQL Server): ORM and migrations.
+- **Serilog** (file sink): Centralized logging.
+- **NArchitecture.Core.Mailing**: Email sending (verification, notifications).
+- **StackExchange.Redis**: Distributed caching.
 
-### Installation
+## Architecture
 
-1. Clone the repo
-   ```sh
-   git clone --recurse-submodules https://github.com/kodlamaio-projects/nArchitecture.git
+- Layered Architecture (Domain / Application / Persistence / Infrastructure / WebAPI)
+- CQRS + MediatR
+- Repository Pattern
+- DTOs + AutoMapper
+
+## Features
+
+- JWT authentication and role-based authorization
+- Email verification and OTP support
+- Dynamic filtering and pagination
+- File logging with Serilog
+- Swagger documentation
+- Cloud image upload integration
+- PDF generation for documents/certificates
+
+## Project Scope
+
+This project models a real bootcamp platform with multiple roles (applicant, employee, instructor, admin) and related workflows:
+
+- User management and authentication
+- Bootcamp lifecycle management
+- Application process and status tracking
+- Quiz and question management
+- Results and certificate generation
+- Media management for instructors/bootcamps
+
+## Domain Model (Key Modules)
+
+- **Users & Auth**: Users, roles (operation claims), refresh tokens, email/OTP authenticators
+- **Applicants**: Applicant profiles and their applications
+- **Bootcamps**: Bootcamp, bootcamp state, bootcamp images and contents
+- **Applications**: Application entity + application state tracking
+- **Quizzes**: Quiz, questions, quiz questions, results
+- **Certificates**: Certificate generation/management
+
+## Entities & Tables (Overview)
+
+Below are the main entities and their responsibilities:
+
+- **User / Applicant / Employee / Instructor**: Core identities and profiles for different roles.
+- **Bootcamp / BootcampState**: Bootcamp definition and lifecycle status.
+- **BootcampImage / BootcampContent**: Media and content related to a bootcamp.
+- **ApplicationEntity / ApplicationState**: Application submission and state tracking.
+- **Quiz / Question / QuizQuestion / Result**: Quiz setup, questions, and exam results.
+- **Certificate**: Generated certificates linked to results/users.
+- **OperationClaim / UserOperationClaim**: Role/permission management.
+- **RefreshToken / EmailAuthenticator / OtpAuthenticator**: Auth flows and verification.
+
+## User Capabilities (High Level)
+
+Typical actions by role:
+
+- **Applicants**
+  - Register and verify email
+  - Browse bootcamps and apply
+  - Take quizzes and view results
+  - Access earned certificates
+- **Instructors**
+  - Manage bootcamp content and media
+  - Create questions and quizzes
+  - Review applicant progress/results
+- **Employees / Admins**
+  - Manage users and roles
+  - Create/update bootcamps and states
+  - Monitor applications and approvals
+  - Maintain operational settings and permissions
+
+## Database
+
+- Database: Microsoft SQL Server (MS SQL)
+- ORM: Entity Framework Core (Code First with migrations)
+- Migrations are stored under `src/narchBootcampProject/Persistence/Migrations`.
+
+### Example Tables (Entities)
+
+- Users, Applicants, Employees, Instructors
+- Bootcamps, BootcampStates, BootcampImages, BootcampContents
+- ApplicationEntities, ApplicationStates, ApplicantBootcampContents
+- Questions, Quizs, QuizQuestions, Results
+- OperationClaims, UserOperationClaims, RefreshTokens
+- EmailAuthenticators, OtpAuthenticators
+
+## Authentication & Authorization
+
+- JWT-based authentication for API access
+- Role-based authorization using `ISecuredRequest` and MediatR pipeline behaviors
+- Refresh token flow for session continuity
+- Optional email and OTP authenticators
+
+## Dynamic Search & Pagination
+
+- Dynamic filtering and sorting via `DynamicQuery`
+- Standard pagination using `PageRequest` and `IPaginate<T>`
+- Implemented in list endpoints (e.g., bootcamps, applications, users)
+
+## Logging & Monitoring
+
+- Centralized logging with Serilog
+- Logs are written to file using `NArchitecture.Core.CrossCuttingConcerns.Logging.Serilog.File`
+
+## Mail Verification
+
+- Email verification is handled through activation keys
+- Mail delivery via `NArchitecture.Core.Mailing` (MailKit/MimeKit under the hood)
+
+## Folder Structure
+
+- `src/narchBootcampProject/Domain`: Entities and core models
+- `src/narchBootcampProject/Application`: Business rules, CQRS, DTOs, services
+- `src/narchBootcampProject/Persistence`: EF Core, repositories, migrations
+- `src/narchBootcampProject/Infrastructure`: External service adapters (e.g., Cloudinary)
+- `src/narchBootcampProject/WebAPI`: API layer
+
+## Setup
+
+### Requirements
+
+- .NET 8 SDK
+- SQL Server
+
+### Steps
+
+1. Clone the repository
+   ```bash
+   git clone <REPO_URL>
    ```
-2. Configure `appsettings.json` in WebAPI.
-3. Run `Update-Database` command with Package Manager Console in WebAPI to create tables in sql server.
-
-- Run the following command to update submodules
-  ```sh
-   git submodule update --remote
+2. Configure database and mail settings in `src/narchBootcampProject/WebAPI/appsettings.json`.
+3. Apply migrations
+   ```bash
+   dotnet ef database update --project src/narchBootcampProject/Persistence --startup-project src/narchBootcampProject/WebAPI
+   ```
+4. Run the API
+   ```bash
+   dotnet run --project src/narchBootcampProject/WebAPI
    ```
 
-## 🚀 Usage
+## Usage
 
-1. Run example WebAPI project `dotnet run --project src\rentACar\WebAPI`
+- Swagger UI: `<API_BASE_URL>/swagger`
+- Auth endpoints: `/api/Auth/*`
 
-### Analysis
+## API Highlights
 
-1. If not, Install dotnet tool `dotnet tool restore`.
-2. Run anaylsis command `dotnet roslynator analyze`
+- **Auth**: login, register, refresh token, email/OTP verification
+- **Users**: CRUD, list with pagination
+- **Bootcamps**: CRUD, dynamic search, image/content management
+- **Applications**: CRUD, status tracking
+- **Quizzes**: questions, quiz setup, results
+- **Certificates**: generate, download, and view as PDF
 
-### Format
+## Development Notes
 
-1. If not, Install dotnet tool `dotnet tool restore`.
-2. Run format command `dotnet csharpier .`
+- CQRS handlers are located under `Application/Features/*`
+- Validation is handled via FluentValidation pipelines
+- Business rules are centralized under `Application/Features/*/Rules`
 
-## 🚧 Roadmap
 
-See the [open issues](https://github.com/kodlamaio-projects/nArchitecture/issues) for a list of proposed features (and known issues).
-
-## 🤝 Contributing
-
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the project and clone your local machine
-2. Create your Feature Branch (`git checkout -b <Feature>/<AmazingFeature>'`)
-3. Develop
-4. Commit your Changes (`git add . && git commit -m '<SemanticCommitType>(<Scope>): <AmazingFeature>'`)
-   💡 Check [Semantic Commit Messages](./docs/Semantic%20Commit%20Messages.md)
-5. Push to the Branch (`git push origin <Feature>/<AmazingFeature>`)
-6. Open a Pull Request
-
-Contributing on Core Packages With This Repo:
-
-1. Fork the [nArchitecture.Core](https://github.com/kodlamaio-projects/nArchitecture.Core) project
-2. Locate to `src/corePackages` path (`cd .\src\corePackages\`)
-3. Add your forked nArchitecture.Core repository remote address (`git remote add <YourUserName> https://github.com/<YourUserName>/nArchitecture.Core.git`)
-4. Create your Feature Branch (`git checkout -b <Feature>/<AmazingFeature>'`)
-5. Develop
-6. Commit your changes (`git add . && git commit -m '<SemanticCommitType>(<Scope>): <AmazingFeature>'`)
-   💡 Check [Semantic Commit Messages](./docs/Semantic%20Commit%20Messages.md)
-7. Push to the branch (`git push <YourUserName> --set-upstream HEAD:refs/heads/<Feature>/<AmazingFeature>`)
-8. Open a Pull Request
-
-If your pull request is accepted and merged:
-
-9. Locate to `src/corePackages` path (`cd .\src\corePackages\`)
-10. Switch to main branch `git checkout main`
-11. Locate root path `/` path (`cd ..\..\`)
-12. Pull repo and submodule `git submodule update --remote`
-13. Commit your changes (`git add . && git commit -m 'build(corePackages): update submodule'`)
-14. Push to the Branch (`git push origin <Feature>/<AmazingFeature>`)
-15. Open a Pull Request
-
-## ⚖️ License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-## 📧 Contact
-
-**Project Link:** [https://github.com/kodlamaio-projects/nArchitecture](https://github.com/kodlamaio-projects/nArchitecture)
-
-<!-- ## 🙏 Acknowledgements
-- []() -->
