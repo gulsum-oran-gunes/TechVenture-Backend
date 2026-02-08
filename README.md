@@ -1,13 +1,13 @@
-# Tobeto3A NArchitecture Bootcamp Project
+# TechVenture Bootcamp Project
 
 This repository contains the **backend** of the project.  
-Frontend repository: https://github.com/gulsum-oran-gunes/BootcampProjectAngular
+Frontend repository: [TechVenture-Frontend](https://github.com/gulsum-oran-gunes/TechVenture-Frontend)
 
 A full‑scope bootcamp project built on .NET 8 that delivers a production‑style backend for a bootcamp management platform. The system covers user onboarding, bootcamp management, applications, quizzes, results, certificates, and media management. It uses layered architecture, CQRS with MediatR, and a clean separation of concerns to keep the codebase maintainable as it grows.
 
 ## Live Demo
 
-- App: https://techventure-web.vercel.app
+- App: [TechVenture](https://techventure-web.vercel.app)
 
 
 ## Tech Stack (Highlights)
